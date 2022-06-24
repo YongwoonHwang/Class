@@ -1,1 +1,375 @@
-1
+# 문자열 관련 함수 : 문자열오브젝트.upper().lower()
+a_str = "Hello Python programming !!"
+print(a_str.upper())
+print(a_str.lower())
+
+a_str_upper = a_str.upper()
+a_str_upper
+
+# 문자열의 공백 제거 : 문자열.strip() -> 양쪽의 공백 제거
+#   문자열.lstrip() -> 왼쪽의 공백 제거
+#   문자열.lstrip() -> 오른쪽의 공백 제거 
+a_str = "  Hello Python programming  !!  "
+print("strip() -> /{}/".format(a_str.strip()))
+print("lsrip() -> /{}/".format(a_str.lstrip()))
+print("rsrip() -> /{}/".format(a_str.rstrip()))
+
+print(a_str.isalnum())   # False
+
+b_str = 'abcd1232cdcd'
+b_str.isalnum()    #True
+
+# find(), rfind() -> 위치 반환
+a_str = "Hello Python programming!!"
+# Python 만 출력 
+print(a_str.find(' '))
+a_str[ a_str.find(' ')+4: a_str.rfind(' ')]
+
+b_str = "Hello Python programming !!"
+b_str[ b_str.find(' ')+1 : b_str.rfind(' ')]\
+[ : b_str[b_str.find(' ')+1 : b_str.rfind(' ')].rfind(' ')]
+
+a_str = "hello hello python"
+# 문자가 해당 문자열에 있는지 확인 : 문자 in 문자열
+print('hello' in a_str ) # True
+print('lo1' in a_str )  #False
+
+a_str = "hello hello python"
+# 문자열.split('분리하고자 하는 문자') 공백은 생략 가능
+a_str.split()
+
+s_str = b_str.split()
+s_str
+
+s_str[1] = s_str[1].upper()
+s_str
+
+"3 + 4 = {}".format(3+4)
+
+# python 3.6 버전 이후부터 가능 : f'문자열{표현식}문자열'
+f'3 + 4 ={3+4}'
+
+print("3 + 4 = {3 + 4}")
+
+#True, False, and, or, not, ==, !=, >, <, >=, <=
+#if 표현식 :
+#    들여쓰기
+if True:
+    print("true 출력")   #실행
+        
+if False:
+    print("False 출력")  #실행 안됨
+
+    #키보드에서 자료를 입력 받아 숫자이면 '입력 받은 자료는 숫자'
+    # 문자이면 '입력 받은 자료는 문자'
+    # 1. 자료 입력 받음
+    input_data = input("자료 입력 :")
+    # 2. 숫자이면 '입력 받은 자료는 숫자' 출력
+    if input_data.isnumeric() :
+        print('입력 받은 자료는 숫자 {}'.format(input_data))
+	# 3. 문자이면 '입력 받은 자료는 문자' 출력
+	if not input_data.isnumeric() :
+    print('입력 받은 자료는 문자 {}'.format(input_data))
+
+    # 날짜 / 시간 활용하기 : datetime 모듈 소스에 삽입
+    # import 모듈명
+import datetime
+
+
+now = datetime.datetime.now()
+print("{}년 {}월 {}일 {}시 {}분 {}초".format
+(now.year, now.month, now.day, now.hour, now.minute, now.second))
+
+if now.hour < 12:
+    print('현재 시각은 {}시로 오전 입니다'.format(now.hour))
+
+   # 3월에서 5월은 봄, 6 ~ 8월은 여름, 9 ~ 11월은 가을, 1,2,12월은 겨울
+  if 3 <= now.month <= 5 :
+    print("{}월은 봄입니다".format(now.month))
+if 6 <= now.month <= 8 :
+    print("{}월은 여름입니다".format(now.month))
+    if 9 <= now.month <= 11 :
+        print("{}월은 가을입니다".format(now.month))
+if 1 <= now.month <= 2 or now.month == 12 :
+    print("{}월은 겨울입니다".format(now.month))
+
+    # 정수를 입력 받아 입력된 숫자가 짝수인지 홀수인지 출력 
+    # 1. 입력된 마지막 문자를 숫자로 변경 0, 2, 4, 6, 8 이면 짝수 
+    #                                     1, 3, 5, 7, 9 이면 홀수 
+
+
+    input_num = input("정수 입력 :")
+
+    last_num = int(input_num[-1])
+
+    if last_num == 0 or 2 or 4 or 6 or 8 :
+        print(f"입력한 숫자 {input_num}는 짝수입니다")
+
+if last_num == 1 or 3 or 5 or 7 or 9 :
+    print(f"입력한 숫자 {input_num}는 홀수입니다")
+
+   # 문자열의 경우 in)
+   else:
+      r[-1])) 연산자를 사용 if '문자' in '문자열'
+last_char = input_num[-1]
+if last_char in '02468':
+   print(f"입력한 숫자{input_num}는 짝수입니다")
+		       
+if last_char in '13579':
+   print(f"입력한 숫자 {input_num}는 홀수입니다")
+
+    # 2. 입력된 문자를 숫자로 변경 후 2로 나눈 남어지 값이 0면 짝수, 1이면 홀수
+    input_num = int(input_num)
+    if input_num if input_num % 2 == 1:
+       print(f"입력한 숫자 {input_num}는 홀수입니다")
+						    
+
+    num = 1
+   if num:
+     print("{}은 0이 아닙니다".format(num))
+
+char = 'abcd'
+if char:
+    print(char)
+
+    input_num = input("정수 입력 :")
+    input_num = int(input_num)
+    if input_num % 2 =print(f"입력한 숫자 {input_num}는 홀수입니다")
+
+
+   # 3월에서 5월은 봄, 6 ~ 8월은 여름, 9 ~ 11월은 가을, 1,2,12월은 겨울
+   if 3 <= now.month <<= now.month <= 8 :
+      print("{}월은 여름입니다".format(now.month))
+elif 9 <= now.month <= 11 :
+    print("{}월은 가을입니다".format(now.month))
+   else : 
+      print("{}월은 겨울입니다".format(now.month))
+
+# 키보드에서 자료를 입력받아 정수이면 짝수인지 확인하고 짝수 출력
+# 정수가 아니면 마지막 문자 출력
+
+input_str = input("자료 입력 :")
+
+if input_str.isdecimal():
+ if input_str[-1] in '02468':
+print("입력 받은 {}는 짝수입니다".format(input_str)
+ else:
+ print("입력 받은 {}는 홀수입니다".format(input_str)
+
+ a = 10
+ if a :
+     pass
+         #아직 구현 안 됨
+	     
+	     # 리스트 선언하기 : [요소, ... ]
+	     list_a = [12, 'test', True, 345, 'python programming']
+	     list_a
+
+	     # 리스트의 요소 접근하는 방법 : 리스트[인덱스]
+	     print(type(list_a))
+	     print(list_a[1])   # test
+	     print(list_a[1:3]) # test, True
+
+	     print(list_a[-1]) # 'python programming'
+
+	     # python programming의 자료에서 python만 출력
+	     print(list_a[-1].split()[0])   # ['python', 'programming']
+	     print(list_a[-1][ : list_a[-1].find(' ')])
+
+	     list_a[-1].split(' ')[0]
+
+	     list_b = [[1,2,3], ['a', 'b', 'c'], [4, 5, 6]]
+	     # 'a' 추출
+	     list_b[1][0]
+
+	     list_a = [12, 'test', True, 345, 'python programming']
+	     list_a[1][1] #test의 'e' 추출
+
+	     list_a[len(list_a) -1 ] #-1을 붙여야 마지막을 찾음 - index에 있는 4까지 밖에 못 찾음
+
+	     len(list_a)
+
+	     # 리스트의 연산 : +, *
+	     # 리스트에 요소 추가하기 : 리스트명.메ㅔ둥(요소), 리스트명.insert(위치, 요소)
+	     # 리스트의 각 요소를 리스트에 추가 :리스트명.extend(리스트)
+	     list_a = [1, 2, 3]
+	     list_b = [4, 5, 6]
+	     print(list_a + list_b)  #기존 자료에 영향을 주지 않음
+	     print()
+	     print(list_a)
+	     print()
+
+	     list_a.append('a')   # 기존의 리스트에 영향을 줌
+	     print(list_a)
+
+	     list_a.append(list_b)   #[ 1,2,3,'a', [4, 5, 6]]
+	     print(list_a)
+
+	     list_a.insert(1, 'test')  # [1, 'test', 2, 3, 'a', [4, 5, 6]]
+	     print(list_a)
+	     print()
+
+	     list_a.extend(list_b)   # [1, 'test', 2, 3, 'a', [4, 5, 6], 4, 5, 6]
+	     print(list_a)
+
+list_c = []
+list_c.append('a')
+list_c.append([1,2,3])
+list_c
+
+# 여러 개(5)의 자료를 입력받아 리스트로 만든 후 
+# 리스트의 내용을 출력, 
+# 다시 문자를 입력 받아, 2번 째 자료를 수정하세요.
+list_aa = []
+input_aa = input("첫번째 자료 입력 :")
+list_aa.append(input_aa)
+input_ab = input("두번째 자료 입력 :")
+list_aa.append(input_ab)
+input_ac = input("세번째 자료 입력 :")
+list_aa.append(input_ac)
+input_ad = input("네번째 자료 입력 :")
+list_aa.append(input_ad)
+input_ae = input("다섯번째 자료 입력 :")
+list_aa.append(input_ae)
+print(list_aa)
+
+list_aa[0] = input("수정할 자료 입력 :")
+print(list_aa)
+
+# 리스트 제어 : 인덱스 제거 -> del 리스트명[인덱스]
+#       마지막 요소 제거 : 리스트.pop()
+
+del list_aa[0]
+print(list_aa)
+
+list_aa.pop(1)
+print(list_aa)
+
+# 리스트의 인덱스 슬라이싱 : 리스트명[ start : stop : step ]
+list_a = [1,2,3,4,5,6,7,8,9]
+
+print(list_a[ : :2])
+print(list_a[2 : 5: 1])
+
+print(list_a[ : : -1])
+# 리스트의 자료 제거 : del 리스트명[인덱스], 리스트명.pop([위치])
+# 리스트의 값으로 제거 : 리스트명.remove(값)
+list_r = [1,2,1,2,3]
+list_r.remove(2)
+
+print(list_r)
+
+# 리스트의 내용을 모두 제거 : 리스트명.clear()
+list_r.clear()
+print(list_r)
+
+# 리스트의 자료를 추가 : append(요소), insert(위치, 요소), extend(리스트)
+# 수정 : 리스트[위치] = 값
+# 삭제 : del 리스트[위치], 리스트.pop() 마지막 삭제, 리스트.pop(위치)
+# 값으로 삭제 : 리스트.remove(값) -> 처음 나오는 값을 제거
+# 모든 요소 삭제 : 리스트.clear()
+# 정렬 : 리스트.sort(reverse=True)
+# 값 in 리스트
+
+list_a = [23, 56, 12, 78, 23]
+print(list_a)
+
+list_a.sort(reverse=True)
+print(list_a)
+
+list_a.sort(reverse=False)
+print(list_a)
+
+print(20 in list_a) #False
+print(20 not in list_a) #True
+# for 반복문 : 리스트와 함께 사용
+# for 반복자 in 반복할 수 있는 모든 자료:
+
+for char in 'hello for':
+    print(char, end=' ')
+    print()
+
+    cnt = 0
+    for value in list_a:
+        cnt += 1
+	print('{}회 : {}'.format(cnt, value))
+	  print('end')
+
+	   list_array = [ [1,2,3], [4,5,6], [7,8,9,10]]
+	   for items in list_array:
+      for item in items:
+       print(item,end='\t')
+    print()
+
+    # 구구단 출력 
+
+    list_dan = [2,3,4,5,6,7,8,9]
+    list_num = [1,2,3,4,5,6,7,8,9]
+
+    # 단을 반복해서 리스트에 가져옴
+    for dan in list_dan:
+     # 단을 출력
+print("=== {}단 ===".format(dan))
+# 단에 대해서 num의 각 값을 곱한 결과 출력
+    line_cnt = 0
+       for num in list_num:
+      line_cnt += 1
+       if line_cnt < 3:
+        print("{} * {} = {}".format(dan, num, dan * num), end='\t')
+         else:
+             print("{} * {} = {}".format(dan, num, dan * num))
+           line_cnt = 0
+print()
+
+a_list = [1,2,3,4,5,6,7,8,9]
+for items in a_list:
+    if items == 7:
+            break
+      if items % 3 == 0:
+       continue
+    print(items)
+
+   # 전개 연산자 
+   print(a_list)
+   print(*a_list)
+
+    while True:
+        input_data = input('계산식 : ').split()
+    if input_data[0] == 'q' :
+          break
+
+   # 3 + 4 -> 7 계산기 프로그램 작성
+   # 반복해서 작성
+# 처음 문자에 'q'가 입력되면 프로그램 종료
+   # 1. 문자열 입력 -> 리스트에 저장
+   # 2. 리스트의 자료를 가져 옴
+   # 3. 리스트의 처음 자료가 'q'이면 프로그램 종료
+   # 4. 계속 입력 -> 리스트에 저장
+
+   while True:
+       input_data = input('계산식 : ').split()
+    if input_data[0] == 'q' :
+           print('program end !!')
+          break
+          #입력 받은 자료가 숫자가 아니면 재 입력
+       if len(input_data) !=3 or not input_data[0].isnumeric() or \
+      not input_data[2].isnumeric() :
+             print("계산식을 다시 입력 (ex: 3 + 4 형식으로)")
+continue
+												     
+      if not input_data[1] in '+-*/':
+             print("부호 오류입니다")
+														          continue
+    if input_data[1] == '+':
+            result = int(input_data[0]) + int(input_data[2])
+    elif input_data[1] == '-':
+       result = int(input_data[0]) - int(input_data[2])
+    elif input_data[1] == '*':
+          result = int(input_data[0]) * int(input_data[2])
+      else:
+       result = int(input_data[0]) / int(input_data[2])
+						    
+   print(f"{input_data[0]} {input_data[1]} {input_data[2]} = {result}")
+							        
+								    
+
