@@ -1,0 +1,163 @@
+print("{} {} {}".format(1, 2, type(3)) )
+
+a = input("> 1번째 숫자: ")
+b = input("> 2번째 숫자: ")
+print()
+
+print("{} + {} = {}".format(a, b, int(a) + int(b)))
+
+string = "hello"
+string.upper()
+print("A지점:", string)
+print("B지점:", string.upper())
+
+# 구의 반지름을 r 이라고 할 때 
+# 부피 = 4/3 파이r**3
+# 겉넓이 = 4파이r**2
+
+# 구의 반지름을 입력해주세요 : 5
+# 구의 부피는 523.59866666666입니다.
+# 구의 겉넓이는 314.1592입니다.
+
+r = 5 
+pi = 3.141592
+vol = 4/3 * pi * r**3
+area = 4* pi * r**2
+
+print(vol)
+print(area)
+
+2. 피타고라스의 정리
+
+# a**2 + b**2 = c**2
+# 밑변의 길이를 입력해주세요: 3.0
+# 높이의 길이를 입력해주세요: 4.0
+# = 빗변의 길이는 5.0입니다.
+a = 3.0
+b = 4.0
+
+c = (a**2 + b**2)** (1/2)
+print(c)
+
+3 확인문제
+
+# 비교 연산자 확인
+print(10 == 100)
+print(10 != 100)
+print(10 > 100)
+print(10 < 100)
+print(10 <= 100)
+print(10 >= 100)
+
+# 참 거짓 
+x = 10
+if x > 4:
+    print("참입니다")
+
+    # 사용자로부터 숫자 두개를 입력받고 첫 번째 입력받은 숫자가 큰지,
+    # 두 번째 입력받은 숫자가 큰지를 구하는 프로그램을 다음 빈칸을 채워 완성해 보세요.
+    a = int(input("> 1번째 숫자:"))
+    b = int(input("> 2번째 숫자:"))
+    print()
+
+    if a > b:
+        print("처음 입력했던 {}가 {}보다 더 큽니다". format(a, b))
+	if b > a:
+	    print("두 번째로 입력했던 {}가 {}보다 더 큽니다". format(b, a))
+
+# 다음 코드의 실행 결과를 예측해 빈칸에 결괏값을 입력하세요.
+# 1.
+x = 2
+y = 10
+
+if x > 4:
+    if y > 2:
+            print(x * y)
+	            
+		    else:
+		            print(x + y)
+
+# 2.
+x = 1
+y = 4
+
+if x > 4:
+    if y > 2:
+            print(x * y)
+	            
+		    else:
+		        print(x + y)
+
+# 3.
+x = 10
+y = 2
+
+if x > 4:
+    if y > 2:
+            print(x * y)
+	            
+		    else:
+		        print(x + y)
+
+# 다음 중첩 조건문에 논리 연산자를 적용해 하나의 if 조건문으로 만들어 주세요.
+x = int(input("여기 입력: "))
+
+if x > 10 and x < 20:
+    print("조건에 맞습니다.")
+
+# 사용자에게 태어난 연도를 입력받아 띠를 출력하는 프로그램을 작성해주세요.
+# 작성시 입력받은 연도를 12로 나눈 나머지를 사용합니다. 
+# 나머지가 0,1,2,3,4,5,6,7,8,9,10,11 일 때 각각 
+# 원숭이, 닭, 개 , 돼지, 쥐, 소, 범, 토끼, 용, 뱀, 말, 양띠 입니다.
+str_input = input("태어난 해를 입력하세요: ")
+birth_year = int(str_input) % 12
+
+if birth_year == 0:
+    print("원숭이 띠입니다.")
+    elif birth_year == 1:
+        print("닭 띠입니다.")
+	elif birth_year == 2:
+	    print("개 띠입니다.")
+	    elif birth_year == 3:
+	        print("돼지 띠입니다.")
+		elif birth_year == 4:
+		    print("쥐 띠입니다.")
+		    elif birth_year == 5:
+		        print("소 띠입니다.")
+			elif birth_year == 6:
+			    print("범 띠입니다.")
+			    elif birth_year == 7:
+			        print("토끼 띠입니다.")
+				elif birth_year == 8:
+				    print("용 띠입니다.")
+				    elif birth_year == 9:
+				        print("뱀 띠입니다.")
+					elif birth_year == 10:
+					    print("말 띠입니다.")
+					    elif birth_year == 11:
+					        print("양 띠입니다.")
+
+ 조건문을 사용해서 한 마디 대화를 나눌 수 있는 프로그램을 만들어 보세요.
+ # 간단하게 "안녕" 또는 "안녕하세요"를 입력하면 프로그램이 "안녕하세요" 
+ # 정도의 인사를 할 수 있게 해보고,"지금 몇 시야?" 또는 "지금 몇시에요?"처럼 
+ # 시간을 물어보면 시간을 응답하게 구현해 보세요.
+
+ ai_a = input("입력: ")
+ import time
+ now = time.localtime()
+ time_a = time.strftime('%H', now)
+
+ if ai_a == "안녕":
+     print("> 안녕하세요.")
+     elif ai_a == "안녕하세요":
+         print("> 안녕하세요.")
+	 elif ai_a == "안녕하세요.":
+	     print("> 안녕하세요.")
+	     elif ai_a == "지금 몇 시야?":
+	         print("> 지금은", time_a, "시 입니다.")
+		 elif ai_a == "지금 몇 시에요?":
+		     print("> 지금은", time_a, "시 입니다.")
+		     else:
+		         print(ai_a)
+
+`
