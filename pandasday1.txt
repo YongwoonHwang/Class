@@ -1,0 +1,309 @@
+# 판다스의 자료구조 : 시리즈, 데이터프레임
+import pandas as pd 
+
+# 시리즈 생성 Series(딕셔너리 또는 리스트, index=[ ])
+sr = pd.Series({'a':1, "b":2, "c":3})
+print(sr)
+
+print(type(sr))
+
+# 시리즈 인덱스, 값
+print(sr.index)
+print(sr.values)
+
+# 시리즈를 접근하는 방법 : sr[index], sr[숫자인덱스]
+print(sr['a'], sr[2])
+print()
+print(sr['a':'c'])   # 인덱스 명으로 접근 시 end도 포함
+print()
+print(sr[0:2])      # 숫자 인덱스로 접근하면 end는 미포함
+
+# 리스트 또는 튜플을 시리즈로 만들면서 인덱스명 부여
+list_data = ['영인', '2022-06-30', '남', True]
+sr1 = pd.Series(list_data, index = ['이름', '생년월일', '성별', '학생여부'])
+sr1
+
+sr1[ ['이름', '생년월일'] ] # 인덱스를 여러개 추출할시 
+
+sr1[ [1, 3] ]
+print(sr1.dtype)  # 시리즈에 저장된 데이터 타입 숫자 -> int64 문자 -> object
+print(type(sr1['이름']))
+print(sr.dtype)   #시리즈에 저장된 숫자 타이
+print(type(sr['a']))
+
+# 데이터프레임 : 시리즈가 여러개 묶여서 됨
+# 딕셔너리로 데이터프레임을 생성 -> 키가 컬럼으로 됨 
+dict_data = {'a':[1,2,3,4], 'b':[4,5,6,7], 'c':[7,8,9,10]}
+df = pd.DataFrame(dict_data)
+df
+
+print(type(df))
+print(df.dtypes)    # 각 컬럼의 데이터 타입
+print(df.index)     # 데이터프레임의 인덱스 출력
+print(df.values)    # 각 인덱스의 값 :2차원 리스트로 보여줌
+
+# 2차원 리스트로 인덱스명과 컬럼명을 부여하면서 데이터프레임 생성
+data = [[15, '남', '덕영중'], [17, '여', '수리중']]
+df = pd.DataFrame(data,index=['준서', '예은'], 
+                  columns=['나이', '성별', '학교'])
+		  df
+
+print(df.dtypes)
+print()
+print(df.index)
+print()
+print(df.columns)
+
+# 인덱스명을 변경 : 객체.index = [ 인덱스명, ...]
+# 컬럼명을 변경 : 객체.columns = [ 컬럼명, ...]
+# 준서, 예은 -> 학생1, 학생2
+df.index = ['학생1', '학생2']
+print(df)
+print()
+df.columns = [ '연령', '남녀', '소속']
+print(df)
+
+df
+
+# 인덱스명과 컬럼명을 일부만 수정하고자 할 경우 : 
+# object.rename(index = {old:new, ...}, inplace=True) -> 기존의 정보 변경
+# object.rename(columns = {old:new, ...})
+# 남녀를 성별로 학생1을 준서로 수정
+df.rename(index={'학생1':'준서'}, columns={'남녀':'성별'}, inplace=True)
+df_copy = df.rename(index={'학생1':'준서'}, columns={'남녀':'성별'})
+df
+
+exam_data = {'수학' : [ 90, 80, 70], '영어' : [ 98, 89, 95],
+             '음악' : [ 85, 95, 100], '체육' : [ 100, 90, 90]}
+
+	     # 서준, 우현, 인아 로 인덱스 설정 하면서 exam_data를 이용하여 df 을 생성
+	     df = pd.DataFrame(exam_data, index=['서준', '우현', '인아'])
+	     print(df)
+
+# 행의 자료를 삭제 : 객체.drop(행인덱스 또는 배열, axis=0)
+# 열(컬럼)의 자료를 삭제 : 객체.drop(열인덱스 또는 배열, axis=1)
+# 서준과 우현의 자료를 삭제
+print(df.drop(['서준','우현'], axis=0))
+print()
+print(df.drop('수학', axis=1))
+
+exam_data = [[ 90, 80, 70], [ 98, 89, 95],
+             [ 85, 95, 100], [ 100, 90, 90]]
+	     # exam_data 를 데이터 프레임으로 생성 
+	     # 인덱스명 추가 서준, 준서, 인아, 연아
+	     # 컬럼명 추가 : 국어, 영어, 수학
+
+	     df = pd.DataFrame(exam_data, index=['서준', '준서', '인아', '연아'],
+	                      columns=['국어', '영어', '수학'])
+			      df
+
+# 수학 컬럼명을 체육으로 수정해서 기존 자료에 반영
+# 영어 칼럼 자료 삭제 : 기존 자료에 반영하지 않음, 결과만 확인
+# 서준자료 삭제 : 기존 자료에 반영하지 않음, 결과만 확인
+df.rename(columns = {'수학':'체육'}, inplace=True)
+df.drop('영어', axis=1)
+df.drop('서준', axis=0)
+
+df_copy_1 = df.copy()
+df_copy_1.drop('연아', axis=0, inplace=True)
+print(df_copy_1)
+print()
+print(df)
+
+exam_data = {'수학' : [ 90, 80, 70], '영어' : [ 98, 89, 95],
+             '음악' : [ 85, 95, 100], '체육' : [ 100, 90, 90]}
+	     df = pd.DataFrame(exam_data, index=['서준','우현', '인아'])
+	     df
+
+# 행을 선택 : object.loc[인덱스명] <- 인덱스명으로 선택, 
+#             object.iloc[정수인덱스] <- 정수형인덱스로 선택
+print(df.loc['서준'])
+print()
+print(df.iloc[0])
+
+# 범위로 선택 : 서준과 우현의 자료 검색
+# 인덱스 명으로 검색 object.loc[start : end] -> end 포함
+# 정수 인덱스로 검색 object.iloc[start : end] -> end 미포함
+print(df.loc['서준':'우현']) # 서준과 우현 자료 출력
+print()
+print(df.iloc[0:2])  # 0행과 1행 출력 2행 포함하지 않음
+
+# 서준과 인아의 정보 출력
+print(df.loc[['서준', '인아']])
+print(df.iloc[[0,2]])
+
+# 행을 슬라이싱 : object.iloc[ 시작인덱스: 끝 인덱스: 간격]
+print(df.iloc[0: 3: 2])
+print(df.iloc[ : : 2])
+print(df.iloc[ : : -1])   # 뒤에서 부터 출력
+
+# 열을 선택 : object[컬럼명] 또는 object.컬럼명
+print(df.수학)
+print()
+
+print(df[['수학', '체육']])
+
+# 원소 선택 : object.loc[ 행인덱스명, 컬럼인덱스명]
+#             object.iloc[ 행의 정수인덱스, 컬럼정수인덱스]
+
+# 인아의 수학과 체육 점수를 출력
+df.loc['인아', ['수학', '체육']]
+df.iloc[-1, [0, -1]]
+
+# 서준부터 우현까지 수학에서 음악 점수를 출력
+df.loc[ '서준': '우현', '수학': '음악' ]
+
+# 열 추가 : object['새로운 컬럼명'] = 값
+# '국어' 점수 추가 100
+df['국어'] = [80, 90, 100, 90]
+df
+
+# 행 추가 : object.loc[새로운 행 이름] = 값 또는 배열
+df.loc['철수']  = [80, 90, 100, 90, 70]
+df
+
+# 서준의 영어 점수를 100 으로 수정
+# df.loc['서준', '영어'] = 100
+df.iloc[0, 1] = 100
+df
+
+# 서준의 수학 점수와 국어 점수를 77로 수정
+df.loc['서준',['수학', '국어']] = 77
+print(df)
+# 우현의 수학 점수와 국어 점수를 77, 88로 수정
+df.loc['우현',['수학', '국어']] = 77, 88
+df
+
+# 행과 열의 위치 변경 : object.transpose(), object.T
+df_t = df.T
+df_t.transpose()
+
+# 시리즈를 생성 : pandas.Series(딕셔너리 또는 리스트)
+# 데이터프레임 생성 : pandas.DataFrame(데이타, index=, columns= )
+# 데이터프레임의 인덱스 변경 : object.index = [ 인덱스명, ...]
+#               컬럼명 변경 : object.columns = [컬럼명, ...]
+# object.함수명( , , .. , inplace=True) -> 기존 자료를 변경
+# 인덱스명과 컬럼명을 일부 변경 : object.rename(index = { old : new, })
+#                                   object.rename(columns = {old :new, })
+# 인덱스와 컬럼삭제 : object.drop(인덱스명, axis=0)
+#                     object.drop(컬럼명, axis=1)
+# 원소 수정 : object.loc[인덱스명, 컬럼명] = 값
+# 행 추가 : object.loc[새로운 인덱스명] = 값 또는 배열
+# 열 추가 : object[새로운 열명] = 값
+# 행의 자료 검색 : object.loc[행명], loc[ start: end, 컬럼의 start: end]
+# 열의 자료 검색 : object[열명], 
+# 인덱스와 컬럼 위치 변경 : object.transpose(), object.T
+print("The end.")
+
+exam_data = { '이름': ['서준', '우현', '인아'],
+            '수학' : [90, 80, 70],
+	                '영어' : [100, 80, 90],
+			            '음악' : [100, 90, 100],
+				                '체육' : [90, 80, 70]}
+						df = pd.DataFrame(exam_data)
+						df
+
+# 특정 칼럼을 인덱스로 설정 : object.set_index(컬럼명)
+# 이름 컬럼을 index로 설정
+df.set_index('이름', inplace=True)
+df
+
+# 인덱스 초기화 : object.reset_index()
+df.reset_index(inplace=True)
+df
+
+ndf = df.set_index('이름')
+ndf
+
+# 인덱스를 재배열 : object.reindex(인덱스리스트)
+idx_list = ['서준', '철수', '우현', '인아', '나래']
+ndf_1 = ndf.reindex(idx_list)
+ndf_1 
+
+# 인덱스 기준으로 정렬 : object.sort_index()
+ndf_1.sort_index()
+ndf_1
+
+# 컬럼 값을 기준으로 정렬 : object.sort_values(by = 컬럼, ascending=False)
+ndf.sort_values(by='수학')
+ndf.sort_values(by=['음악', '수학'], ascending=False)
+
+# df.set_index(), df.reset_index(), df.reindex(인덱스 리스트)
+# df.sort_index(), df.sort_values(by=[컬럼, ,,], ascending = False)
+
+# 1. 시리즈 연산
+student1 = pd.Series({'국어':100, '영어':80, '수학':90})
+print(student1)
+
+# 각 점수를 100으로 나눈 값을 출력 
+print(student1 / 100)
+print(student1 + 100)
+
+# 시리즈 vs 시리즈 연산 : 시리즈 연산자(+, -, *, /) 시리즈
+student2 = pd.Series({'국어':90, '영어':80, '수학':100})
+student1 + student2
+
+add = student1 + student2
+sub = student1 - student2
+mul = student1 * student2
+div = student1 / student2
+
+df = pd.DataFrame([add, sub, mul, div], 
+                 index = ['+', '-', '*', '/'])
+		 df
+
+# 연산식에 Nan이 존재하면 연산의 결과는 Nan
+import numpy as np
+
+stud1 = pd.Series({'국어': np.nan, '수학':100, '영어':80})
+stud2 = pd.Series({'국어': 100, '수학': 100})
+
+add = stud1 + stud2
+sub = stud1 - stud2
+mul = stud1 * stud2
+div = stud1 / stud2
+
+df = pd.DataFrame([add, sub, mul, div], 
+                 index = ['+', '-', '*', '/'])
+		 df
+
+# 데이터프레임 연산
+# 데이터프레임 연산자(+,-,*,/) 숫자
+# seaborn에서 제공하는 데이터셋을 로드
+import seaborn as sns
+
+# titanic 데이터 셋을 불러옴 : sns.load_dataset('titanic')
+titanic = sns.load_dataset('titanic')
+titanic
+
+# titanic 에서 age와 fare 컬럼의 정보만 가져와서 df 에 저장
+# df = titanic[['age', 'fare']] # 컬럼의 정보 추출
+# 100번째 부터 200번째 까지의 'age'와 'fare' 컬럼만 추출
+df = titanic.loc[ : , ['age', 'fare']]
+# df = titanic.loc[ 100:200 , ['age', 'fare']]
+
+# df.head() : 처음부터 5개만, df.head(10), df.tail()
+df.head(10)
+df.tail()
+
+add_df = df + 10
+add_df.tail()
+(df + add_df).head()
+sns.get_dataset_names()
+sr_age = titanic.loc[ : , 'age']
+type(sr_age)
+(sr_age + 100).head()
+
+import seaborn as sns
+df_mpg = sns.load_dataset('mpg')
+df_mpg.info()
+print(df_mpg)
+# mpg 데이터셋을 로드해서
+
+# 1. mpg, weight 컬럼을 추출해서 데이터프레임으로 생성 한 후
+df1 = df_mpg[['mpg', 'weight']]
+ample 데이터프레임 생성# 2. 각 원소에 100을 더한 값을 출력
+addd_df = df1 + 100
+df1
+# 3. 데이터프레임을 처음 10개의 정보만 출력
+# 4. 처음부터 100개의 행만 추출하여 mpg_sample 데이터프레임 생성
