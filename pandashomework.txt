@@ -1,0 +1,45 @@
+import pandas as pd
+import seaborn as sns
+
+# seaborn 에서 titanic 데이터를 로드하여 데이터프레임(titanic)으로 생성
+titanic=sns.load_dataset('titanic')
+titanic
+
+# titanic 컬럼별 개수 확인
+print(titanic.count())
+
+# titanic 전체 기본 정보 확인
+titanic.info()
+
+# titanic 통계 정보 확인
+titanic.describe(include = 'all')
+
+# 컬럼별 개수가 300미만인 컬럼과 데이터타입이 숫자가 아닌 컬럼은
+#        제외하고 나머지 컬럼만 추출하여 데이터 프레임 (df) 생성
+cnt = titanic.count()
+col_list = cnt[ cnt > 300].index
+df = titanic.loc[ : , col_list]
+df
+
+col_list = titanic.count()
+col_list[ titanic.count() > 300].index
+# cnt = (titanic.count() > 300).index]
+# cnt
+
+df = titanic.loc[ :, col_list[ titanic.count() > 300].index]
+df = df.loc[:, (df.dtypes == 'int64') | (df.dtypes == 'float64')]
+df
+
+# df의 기본 정보 
+# df 처음 5개의 정보만 
+print(df.info())
+print(df.head(5))
+
+# df의 age와 fare 컬럼에서 200번째 부터 400번째 자료까지만 추출하여 df_1에 저장
+df_1 = df.loc[ 200 : 400, ['age', 'fare']]
+df_1
+
+# df_1의 age 컬럼을 index 컬럼으로 
+df_1.set_index('age', inplace=True)
+
+df_1
