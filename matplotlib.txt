@@ -1,0 +1,63 @@
+# %load fonts.py
+#!/usr/bin/env python
+
+# In[ ]:
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# matplotlib 한글 폰트 문제 해결
+from matplotlib import rc
+import platform 
+
+if platform.system() == 'Darwin':   # Mac 환경 폰트 지정
+    plt.rc('font', family='AppleGothic')
+    elif platform.system() == 'Windows':
+        rc('font', family='Malgun Gothic')
+	    
+	    plt.rc('axes', unicode_minus=False)
+
+# 남한의 수력, 화력, 원자력 발전량의 추이를 분석
+df = pd.read_excel('./dataset/남북한발전전력량.xlsx')
+df
+
+df = df.loc[0:3]
+
+# 전력량 (억kWh) 컬럼 제거
+df = df.drop('전력량 (억㎾h)', axis=1)
+df
+
+# 발전 전력별 컬럼을 인덱스로 
+df.set_index('발전 전력별', inplace=True)
+df
+
+df_t = df.T
+df_t
+
+# 합계 -> 총발전량
+df_t = df_t.rename(columns = {'합계' : '총발전량'})
+df_t
+
+# 전년도 발전량 추가
+df_t['전년도 발전량'] = df_t['총발전량'].shift(1)
+df_t
+
+# 증감율 : (총발전량/전년도발전량 - 1) * 100
+df_t['증감율'] = ((df_t['총발전량']/df_t['전년도 발전량']) -1)*100
+df_t
+
+# 2개축 그래프 그리기 : 수력 화력 원자력 -> 막대 그래프, 증감율 -> 선 그래프
+ax1 = df_t[['수력', '화력', '원자력']].plot(kind="bar", stacked=True)
+ax2 = ax1.twinx()
+ax2.plot(df_t.index, df_t.증감율, ls='--', 
+         marker='o', label = '전년대비 증감율(%)')
+
+	 ax1.set_ylim(0, 6000)
+	 ax2.set_ylim(-50, 50)
+
+	 ax1.set_xlabel("연도")
+	 ax1.set_ylabel("발전량 (억 Kwh)")
+	 ax2.set_ylabel("전년 대비 증감율(%)")
+
+	 plt.title("남한 전력 발전량(1990-2016)")
+	 plt.legend(loc='best')
+	 plt.show()
