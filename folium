@@ -1,0 +1,85 @@
+!pip install folium
+
+import folium
+
+seoul_map = folium.Map(location=[37.55, 126.98], zoom_start=12)
+
+# 지도를 html 파일로 저장 
+seoul_map.save('./dataset/서울지도.html')
+
+seoul_map1 = folium.Map(location=[37.55, 126.98], zoom_start=12,
+                      tiles = 'Stamen Terrain')
+      seoul_map2 = folium.Map(location=[37.55, 126.98], zoom_start=12,
+                            tiles = 'Stamen Toner')
+
+    # 지도를 html 파일로 저장 
+    seoul_map1.save('./dataset/서울지도1.html')
+    seoul_map2.save('./dataset/서울지도2.html')
+
+# 지도에 마커 표시하기
+# 위도, 경도로 지도를 생성
+# 추가 작업 진행
+import pandas as pd 
+
+df = pd.read_excel('./dataset/서울지역 대학교 위치.xlsx')
+# df.head()
+df = df.rename(columns={'Unnamed: 0' : 'name'})
+# df.head()
+df.set_index('name', inplace=True)
+# df.head()
+# 대학교 위치 정보를 marker로 표시
+for name, lat, lng in zip(df.index, df.위도, df.경도):
+    folium.Marker([lat, lng], popup=name).add_to(seoul_map)
+# 지도를 html 파일로 저장
+seoul_map.save('./dataset/seoul_college.html')
+
+seoul_map = folium.Map(location=[37.55, 126.98], zoom_start=12)
+
+# 지도를 html 파일로 저장 
+seoul_map.save('./dataset/서울지도.html')
+
+# 대학교 위치 정보를 marker로 표시
+for name, lat, lng in zip(df.index, df.위도, df.경도):
+    folium.CircleMarker([lat, lng], 
+                        radius = 10,  # 원의 반지름
+			fill = True,   # 원을 채움
+			fill_color = 'coral',   # 원을 채우는 색깔
+			fill_opacit=0.9,
+			popup=name,).add_to(seoul_map)
+
+# 지도를 html 파일로 저장
+seoul_map.save('./dataset/seoul_college1.html')
+
+# 지도 영역에 단계구분도 표시 : Choropleth()
+import json
+
+# 경기도 인구변화 데이터를 불러와서 데이터프레임으로 변환
+file_path = './dataset/경기도인구데이터.xlsx'
+df = pd.read_excel(file_path, index_col='구분', engine= 'openpyxl')
+df.columns = df.columns.map(str)
+
+# 경기도 시군구 경계 정보를 가진 geo-json 파일 불러오기
+geo_path = './dataset/경기도행정구역경계.json'
+try:
+    geo_data = json.load(open(geo_path, encoding='utf-8'))
+except:
+    geo_data = json.load(open(geo_path, encoding='utf-8-sig'))
+
+# 경기도 지도 만들기
+g_map = folium.Map(location=[37.5502,126.982], 
+                   tiles='Stamen Terrain', zoom_start=9)
+
+# 출력할 연도 선택 (2007 ~ 2017년 중에서 선택)
+year = '2017'
+
+# Choropleth 클래스로 단계구분도 표시하기
+folium.Choropleth(geo_data=geo_data,    # 지도 경계
+                 data = df[year],      # 표시하려는 데이터
+		 columns = [df.index, df[year]],  # 열 지정
+		 fill_color='YlOrRd', fill_opacity=0.7, line_opacity=0.3,
+		 threshold_scale=[10000, 100000, 300000, 500000, 700000],
+		 key_on='feature.properties.name',
+		 ).add_to(g_map)
+
+# 지도를 HTML 파일로 저장하기
+g_map.save('./gyonggipopulation' + year + '.html')
